@@ -24,7 +24,7 @@ class Fib():
         self.value = value
 
     def next(self):
-        "*** ТВОЙ КОД ЗДЕСЬ ***"
+        pass
 
     def __repr__(self):
         return str(self.value)
@@ -64,4 +64,32 @@ class VendingMachine:
     >>> w.vend()
     'Получите лимонад.'
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    def __init__(self, good, cost):
+        self.good = good
+        self.cost = cost
+        self.count = 0
+        self.money = 0
+
+    def vend(self):
+        if self.count == 0:
+            return 'Товара нет в наличии.'
+        if self.money < self.cost:
+            return 'Нужно дополнительно внести {0} ₽.'.format(self.cost - self.money)
+        self.money -= self.cost
+        self.count -= 1
+        if self.money > 0:
+            self.money, money = 0, self.money
+            return 'Получите {0} и сдачу {1} ₽.'.format(self.good, money)
+        else:
+            return 'Получите {0}.'.format(self.good)
+
+    def restock(self, count):
+        self.count += count
+        return 'Количество товара «{0}»: {1}'.format(self.good, self.count)
+
+    def deposit(self, money):
+        self.money += money
+        if self.count > 0:
+            return 'Доступно: {0} ₽'.format(self.money)
+        else:
+            return 'Товара нет в наличии. Вот твои деньги — {0} ₽.'.format(self.money)
